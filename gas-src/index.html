@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <base target="_top">
+    <meta charset="UTF-8">
+    <style>
+      body { font-family: sans-serif; padding: 20px; color: #333; }
+      .container { max-width: 800px; margin: 0 auto; border: 1px solid #ccc; padding: 20px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+      h1 { margin-bottom: 20px; text-align: center; }
+      table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+      th, td { border-bottom: 1px solid #ddd; padding: 12px; text-align: left; }
+      th { background-color: #f2f2f2; }
+      .ok { color: #06c755; font-weight: bold; }
+      .ng { color: #ef454d; font-weight: bold; }
+      .footer { margin-top: 30px; font-size: 0.8em; color: #666; text-align: center; }
+      .poll-content { background-color: #f9f9f9; padding: 15px; border-radius: 5px; margin-bottom: 20px; border-left: 5px solid #06c755; }
+      .poll-content h2 { font-size: 1.2em; margin-top: 0; color: #333; }
+      .poll-content p { white-space: pre-wrap; margin-bottom: 0; }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h２>See results</h2>
+      <? if (pollContent) { ?>
+        <div class="poll-content">
+          <p><?= pollContent ?></p>
+          <? if (translatedPollContent) { ?>
+            <hr style="border: 0; border-top: 1px solid #ddd; margin: 10px 0;">
+            <p style="color: #666; font-size: 0.9em;"><?= translatedPollContent ?></p>
+          <? } ?>
+        </div>
+      <? } ?>
+
+      <? if (results.length > 0) { ?>
+        <table>
+          <thead>
+            <tr>
+              <th>日時</th>
+              <th>名前</th>
+              <th>回答</th>
+            </tr>
+          </thead>
+          <tbody>
+            <? for (var i = 0; i < results.length; i++) { ?>
+              <tr>
+                <td><?= new Date(results[i].timestamp).toLocaleString('ja-JP', { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' }) ?></td>
+                <td><?= results[i].userName ?></td>
+                <td class="<?= results[i].answerValue.toLowerCase() ?>"><?= results[i].answerValue ?></td>
+              </tr>
+            <? } ?>
+          </tbody>
+        </table>
+      <? } else { ?>
+        <p style="text-align: center;">まだ回答はありません。</p>
+      <? } ?>
+
+      <div class="footer">
+        <p>対象投稿ID: <?= postId ?></p>
+        <p style="margin-top: 20px; font-size: 0.9em; line-height: 1.6;">
+          <strong>[Check]</strong> でアンケートを作成<br>
+          <strong>私の名前は"〇〇"</strong> で名前を設定
+        </p>
+      </div>
+    </div>
+  </body>
+</html>
